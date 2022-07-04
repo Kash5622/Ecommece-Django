@@ -1,0 +1,40 @@
+{% extends 'shop/basic.html' %}
+{% block title %} Products Details {% endblock %}
+{% block css %}
+
+
+
+{% endblock %}
+
+{% block body %}
+{% load static %}
+
+  <div class="container d-flex flex-row flex-wrap align-items-center" style="margin: auto;margin-top: 1.5rem;justify-content: space-evenly;">
+      {% for x in members %}
+      <div class="" style="width: 15rem;height: 22rem;margin: 4px 4px;">
+          <img src="/media/{{x.image}}" class="card-img-top" style="height: 100%;width: 100%;border-radius: 20px;" alt="...">
+      </div>
+      <div class="" style="width: 15rem;height: 22rem;margin: 4px 4px;">
+            <h5 class="card-title">{{ x.product_name }}</h5>
+            <p class="card-text " style="margin-bottom: 0.25rem;"><img src="{% static 'shop/shoe.png' %}">  {{ x.category }}</p>
+            <p class="card-text" style="margin-bottom: 0.25rem;margin-left: 5px;"><img src="{% static 'shop/category.png' %}">  {{ x.subcategory }}</p>
+            <p class="card-text" style="margin-bottom: 0.25rem;margin-left: 5px;">₹{{ x.price }}</p>
+            <p class="card-text" style="margin-bottom: 0.25rem;margin-left: 5px;">{{ x.desc }}</p>
+      </div>
+
+
+
+    </div>
+     <div class="d-flex align-items-center justify-content-center" style="margin: 2rem;">
+          {% if x.stock > 0 %}
+          <button id="{{ x.id }}" class="cart btn btn-success">Add to Cart</button>
+          {% else %}
+          <a href="#" class="btn btn-danger disabled">Out of stock</a>
+          {% endif %}
+        </div>
+
+{% endfor %}
+
+{% endblock %}
+
+{% block js %} {% endblock %}

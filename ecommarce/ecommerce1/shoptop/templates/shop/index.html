@@ -1,0 +1,102 @@
+{% extends 'shop/basic.html' %}
+
+{% block title %} Shoptop {% endblock %}
+
+{% block css %}
+.catimg{
+      width:6rem;
+      height:5rem;
+      border-redius:20px;
+      .con{
+      display:flex;
+      flex-direction:column;
+      }
+      .con-h4{
+      display:inline-block;
+      }
+      .card-img-top{
+      width:20rem;
+      height:15rem;
+      }
+
+<!--      .cat{-->
+<!--      display: flex;-->
+<!--    flex-direction: column;-->
+<!--    justify-content: center;-->
+<!--    align-items: center;-->
+<!--      }-->
+
+
+{% endblock %}
+
+ {% block body %}
+    {% load static %}
+<div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="{% static 'shop/fimg7.jpg' %}" class="d-block w-100 h-25" alt="...">
+
+    </div>
+    <div class="carousel-item">
+      <img src="{% static 'shop/fimg8.jpg' %}" class="d-block w-100 h-25" alt="...">
+
+    </div>
+    <div class="carousel-item">
+      <img src="{% static 'shop/fimg9.jpg' %}" class=" w-100 h-25" alt="...">
+
+      </div>
+    </div>
+
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+    </div>
+  </div>
+
+
+ <div class="container" style="margin: 1rem auto;">
+  <div class="row">
+    <div class="col d-flex flex-column align-items-center">
+        <a href="/products/Sneaker"> <img src="{% static 'shop/sneakers2.png' %}" class="rounded  catimg" alt="..."></a>
+        <span class="con-h4">Sneakers</span>
+    </div>
+    <div class="col d-flex flex-column align-items-center">
+      <a href="/products/Sport"> <img src="{% static 'shop/sportshoe.png' %}" class="rounded  catimg" alt="..."></a>
+      <span class="con-h4">Sport</span>
+    </div>
+    <div class="col d-flex flex-column align-items-center">
+      <a href="/products/Formal"><img src="{% static 'shop/formalshoe.png' %}" class="rounded  catimg" alt="..."></a>
+      <span class="con-h4">Formal</span>
+    </div>
+  </div>
+</div>
+
+    <div class="container-fluid  d-flex flex-row flex-wrap align-items-center justify-content-center">
+      {% for x in members %}
+      <div class="card" style="width: 10rem;height: 22rem;margin: 4px 4px;">
+          <a href="/product_details/{{x.id}}"><img src="/media/{{x.image}}" class="card-img-top" style="height: 150px;width: 160px;" alt="..."></a>
+          <div class="card-body " style="padding: 0rem 1rem;">
+          <h5 class="card-title">{{ x.product_name }}</h5>
+          <p class="card-text " style="margin-bottom: 0.25rem;"><img src="{% static 'shop/shoe.png' %}">  {{ x.category }}</p>
+            <p class="card-text" style="margin-bottom: 0.25rem;"><img src="{% static 'shop/category.png' %}">  {{ x.subcategory }}</p>
+            <p class="card-text" style="margin-bottom: 0.25rem;">₹{{ x.price }}</p>
+          </div>
+        <div class="d-flex align-items-center justify-content-center" style="margin: 5px;">
+          {% if x.stock > 0 %}
+          <button id="{{ x.id }}" class="cart btn btn-success">Add to Cart</button>
+          {% else %}
+          <a href="#" class="btn btn-danger disabled">Out of stock</a>
+          {% endif %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+{% endblock %}
+
+{% block js %} {% endblock %}

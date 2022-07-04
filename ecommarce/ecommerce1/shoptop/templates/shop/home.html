@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    <title></title>
+      <style>
+          .catimg{
+      width:6rem;
+      height:5rem;
+      border-redius:20px;
+      .con{
+      display:flex;
+      flex-direction:column;
+      }
+      .con-h4{
+      display:inline-block;
+      }
+      .card-img-top{
+      width:20rem;
+      height:15rem;
+      }
+
+      </style>
+
+      </head>
+  <body class="body">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/">Shoptop</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/">Home</a>
+            </li>
+            <li class="dropdown show">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
+    Category
+  </a>
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <a class="dropdown-item" href="/products/Sneaker">Sneakers</a>
+                <a class="dropdown-item" href="/products/Sport">Sport</a>
+                <a class="dropdown-item" href=/products/Formal">Formal</a>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/products">Product</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="/aboutus">About us</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/contactus">Contact us</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="/account/login">Login</a>
+            </li>
+              <li class="nav-item">
+              <a class="nav-link" href="/account/register">Register</a>
+            </li>
+
+        </ul>
+
+          <form class="d-flex">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+          </form>
+        </div>
+      </div>
+    </nav>
+
+    {% load static %}
+<div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="{% static 'shop/fimg7.jpg' %}" class="d-block w-100 h-25" alt="...">
+
+    </div>
+    <div class="carousel-item">
+      <img src="{% static 'shop/fimg8.jpg' %}" class="d-block w-100 h-25" alt="...">
+
+    </div>
+    <div class="carousel-item">
+      <img src="{% static 'shop/fimg9.jpg' %}" class=" w-100 h-25" alt="...">
+
+      </div>
+    </div>
+
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+    </div>
+  </div>
+
+
+ <div class="container" style="margin: 1rem auto;">
+  <div class="row">
+    <div class="col d-flex flex-column align-items-center">
+        <a href="/products/Sneaker"> <img src="{% static 'shop/sneakers2.png' %}" class="rounded  catimg" alt="..."></a>
+        <span class="con-h4">Sneakers</span>
+    </div>
+    <div class="col d-flex flex-column align-items-center">
+      <a href="/products/Sport"> <img src="{% static 'shop/sportshoe.png' %}" class="rounded  catimg" alt="..."></a>
+      <span class="con-h4">Sport</span>
+    </div>
+    <div class="col d-flex flex-column align-items-center">
+      <a href="/products/Formal"><img src="{% static 'shop/formalshoe.png' %}" class="rounded  catimg" alt="..."></a>
+      <span class="con-h4">Formal</span>
+    </div>
+  </div>
+</div>
+
+    <div class="container-fluid  d-flex flex-row flex-wrap align-items-center justify-content-center">
+      {% for x in members %}
+      <div class="card" style="width: 10rem;height: 22rem;margin: 4px 4px;">
+          <a href="/product_details/{{x.id}}"><img src="/media/{{x.image}}" class="card-img-top" style="height: 150px;width: 160px;" alt="..."></a>
+          <div class="card-body " style="padding: 0rem 1rem;">
+          <h5 class="card-title">{{ x.product_name }}</h5>
+          <p class="card-text " style="margin-bottom: 0.25rem;"><img src="{% static 'shop/shoe.png' %}">  {{ x.category }}</p>
+            <p class="card-text" style="margin-bottom: 0.25rem;"><img src="{% static 'shop/category.png' %}">  {{ x.subcategory }}</p>
+            <p class="card-text" style="margin-bottom: 0.25rem;">₹{{ x.price }}</p>
+          </div>
+        <div class="d-flex align-items-center justify-content-center" style="margin: 5px;">
+          {% if x.stock > 0 %}
+          <button id="{{ x.id }}" class="cart btn btn-success">Add to Cart</button>
+          {% else %}
+          <a href="#" class="btn btn-danger disabled">Out of stock</a>
+          {% endif %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+ <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<!--    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>-->
+<!--    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>-->
+
+  </body>
+</html>

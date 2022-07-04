@@ -1,0 +1,165 @@
+{% extends 'shop/basic.html' %}
+{% block title %} Shoptop_cart {% endblock %}
+{% block css %}
+.body{
+background-color: rebeccapurple;
+}
+{% endblock %}
+{% block navsearch %}
+
+{% endblock %}
+{% block body %}
+
+{% load static %}
+<div class="container-fluid  d-flex flex-row flex-wrap align-items-center justify-content-center" >
+{% for z in members %}
+<span id="item_card{{z.id}}">
+                    <form method="post" id="form_cart" action="/cart">
+                      {% csrf_token %}
+                      <input type="hidden" id="cart_v" value="" name="cart"/>
+                  </form>
+                    <div class="card" style="width: 10rem;height: 22rem;margin: 4px 4px;">
+                     <a href="/product_details/{{z.id}}"><img src="/media/{{z.image}}" class="card-img-top" style="height: 150px;width: 160px;" alt="..."></a>
+                      <div class="card-body " style="padding: 0rem 1rem;">
+                      <h5 class="card-title">{{ z.product_name }}</h5>
+                      <p class="card-text " style="margin-bottom: 0.25rem;"><img src="{% static 'shop/shoe.png' %}">  {{ z.category }}</p>
+                        <p class="card-text" style="margin-bottom: 0.25rem;"><img src="{% static 'shop/category.png' %}">  {{ z.subcategory }}</p>
+                        <p class="card-text" style="margin-bottom: 0.25rem;">₹{{ z.price }}</p>
+                      </div>
+
+                    <div class="d-flex align-items-center justify-content-center" style="margin: 5px;">
+                        <span id="div{{z.id}}" class="divpr">
+
+                        </span>
+                    </div>
+
+                    </div>
+</span>
+
+{% endfor %}
+</div>
+<div class="container d-flex flex-row align-items-center justify-content-center" id="checkout">
+    <h3 id="total_" style="margin: 50px 30px;color:white;">Your Cart Value </br><span>₹</span> <span id="tPrice"></span></h3>
+    <form method="post" action="/checkout">
+        {% csrf_token %}
+        <input type="hidden" id="checkout_cart" value="" name="checkout">
+        <button type="submit" class="btn btn-success" id="checkout_button"  >Check out</button>
+    </form>
+</div>
+<div>
+<input id="cart_value" type="hidden" value="{{cart_json}}"/>
+</div>
+
+ {% endblock %}
+
+{% block js %}
+<script>
+
+ var cart_value=document.getElementById('cart_value').value;
+ var cart_local=JSON.parse(cart_value);
+ if(localStorage.getItem('cart')==null){
+    var cart={};
+
+    }
+    else{
+    updateCart(cart);
+    }
+    let tPrice=0;
+    for(let k in cart){
+                for(let x in cart_local){
+                    if(k==x){
+                    tPrice+=cart_local[k]*cart[k];
+                    }
+                }
+           }
+    document.getElementById("tPrice").innerHTML=tPrice;
+function updateCart(cart) {
+    for (var item in cart) {
+        document.getElementById('div' + item).innerHTML = "<button id='minus" + item + "' class='btn btn-primary minus'>-</button> <span id='val" + item + "'>" + cart[item] + "</span> <button id='plus" + item + "' class='btn btn-primary plus'> + </button>";
+    }
+    localStorage.setItem('cart', JSON.stringify(cart));
+    count=0;
+    for(var key in cart){
+        count=count+cart[key];
+    }
+    document.getElementById('cart').innerHTML = count;
+
+ };
+$('.divpr').on("click", "button.minus", function(){
+ let tPrice=0;
+
+       a=this.id.slice(5,);
+       cart[a]=cart[a]-1;
+       cart[a] = Math.max(0, cart[a]);
+       document.getElementById("val"+a).innerHTML = cart[a];
+       if(cart[a]== 0){
+       delete cart[a];
+       delete cart_local[a];
+       console.log(cart);
+       document.getElementById("cart_v").value=JSON.stringify(cart);
+       document.getElementById("form_cart").submit();
+<!--       $.post("cart",-->
+<!--  {-->
+<!--    cart: cart,-->
+<!--    csrfmiddlewaretoken: '{{ csrf_token }}'-->
+<!--  },-->
+<!--  function(data, status){-->
+<!--    alert("Data: " + data + "\nStatus: " + status);-->
+<!--  });-->
+       console.log(cart);
+       console.log(cart_local);
+       document.getElementById("item_card"+a).style.display="none";
+       }
+       updateCart(cart);
+
+
+       for(let k in cart){
+            for(let x in cart_local){
+                if(k==x){
+                tPrice+=cart_local[k]*cart[k];
+                }
+            }
+       }
+        if(tPrice==NaN){
+        tPrice=0;
+
+        }
+        document.getElementById("tPrice").innerHTML=tPrice;
+
+});
+
+$('.divpr').on("click", "button.plus", function(){
+ //console.log(cart_value);
+    let tPrice=0;
+       a = this.id.slice(4,);
+        cart[a] = cart[a]+1;
+       document.getElementById("val"+a).innerHTML = cart[a];
+       updateCart(cart);
+
+       for(let k in cart){
+            for(let x in cart_local){
+                if(k==x){
+                tPrice+=cart_local[k]*cart[k];
+                }
+            }
+       }
+        if(tPrice==NaN)
+        tPrice=0;
+        document.getElementById("tPrice").innerHTML=tPrice;
+
+<!--       for(let k in Object.keys(cart_local)){-->
+<!--       if(parseInt(cart_local[k]==a)){-->
+<!--       let prod_price = cart_local[a];-->
+<!--               let count = cart[a];-->
+<!--                   tPrice+ = (count * prod_price);}-->
+<!--       console.log(cart_local[k]);}-->
+<!--document.getElementById("tPrice").innerText=tPrice;-->
+<!-- console.log(cart_value);-->
+
+});
+    if(Object.keys(cart).length==0){
+    document.getElementById("checkout_button").style.display="none";
+    }
+document.getElementById('checkout_cart').value=JSON.stringify(cart);
+</script>
+{% endblock %}

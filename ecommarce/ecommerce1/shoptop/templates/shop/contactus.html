@@ -1,0 +1,64 @@
+{% extends 'shop/basic.html' %}
+{% block title %} Contact Us {% endblock %}
+{% block css %}
+
+.body{
+background-color:#d1e7dd;
+}
+
+{% endblock %}
+
+{% block body %}
+
+
+
+<!-- other from-->
+
+<div class="alert alert-success" role="alert">
+        {% for message in messages %}
+            {{message}}
+        {% endfor %}
+    </div>
+<div class="container">
+    <form class="row g-3 needs-validation" novalidate method="POST" action="/contactus">
+      {% csrf_token %}
+      <div class="col-md-4">
+        <label for="validationCustom01" class="form-label">First name</label>
+        <input type="text" class="form-control" id="validationCustom01" name="fname" required>
+        <div class="valid-feedback">
+          Looks good!
+        </div>
+      </div>
+      <div class="col-md-4">
+        <label for="validationCustom02" class="form-label">Last name</label>
+        <input type="text" class="form-control" id="validationCustom02" name="lname"  required>
+        <div class="valid-feedback">
+          Looks good!
+        </div>
+      </div>
+      <div class="col-md-4">
+        <label for="validationCustomUsername" class="form-label">Username (Optional) </label>
+        <div class="input-group has-validation">
+          <span class="input-group-text" id="inputGroupPrepend">@</span>
+          <input type="text" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" name="uname">
+          <div class="invalid-feedback">
+            Please choose a username.
+          </div>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="exampleFormControlInput1" class="form-label">Email address</label>
+        <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com" name="eaddress" required>
+      </div>
+      <div class="mb-3">
+        <label for="exampleFormControlTextarea1" class="form-label">Enter your query</label>
+        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="tarea" required></textarea>
+      </div>
+      <div class="col-12">
+        <button class="btn btn-primary" type="submit">Submit Now</button>
+      </div>
+    </form>
+ </div>
+
+
+{% endblock %}
